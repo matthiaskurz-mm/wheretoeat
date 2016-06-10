@@ -1,58 +1,58 @@
 {
-"Pizza Dach": {
+"Weintor": {
 	"Kategorie": "Pizza",
 	"Position": {
-		"Longitude": 13.456106,
-		"Latitude": 52.51024
+		"Longitude": 8.279616,
+		"Latitude": 49.998922
 	}
 },
-"Burgeramt": {
+"Jupitersäule": {
 	"Kategorie": "Burger",
 	"Position": {
-		"Longitude": 13.459539,
-		"Latitude": 52.510299
+		"Longitude": 8.279616,
+		"Latitude": 49.998922
 	}
 },
-"Pesto i Pizza": {
+"Museum für Antike Schifffahrt": {
 	"Kategorie": "Pizza",
 	"Position": {
-		"Longitude": 13.413776,
-		"Latitude": 52.511971
+		"Longitude": 8.280026,
+		"Latitude": 49.994111
 	}
 },
-"Il Due Forni": {
+"Landesmuseum": {
 	"Kategorie": "Pizza",
 	"Position": {
-		"Longitude": 13.412397,
-		"Latitude": 52.530876
+		"Longitude": 8.268014,
+		"Latitude": 50.003871
 	}
 },
-"Spaghetti Western": {
+"Weinbehörde am Gericht": {
 	"Kategorie": "Pasta",
 	"Position": {
-		"Longitude": 13.388557,
-		"Latitude": 52.524368
+		"Longitude": 8.267563,
+		"Latitude": 50.006119
 	}
 },
-"Ron Teleski": {
+"Brunnenmaske am Kupferberg": {
 	"Kategorie": "Pizza",
 	"Position": {
-		"Longitude": 13.415165,
-		"Latitude": 52.493024
+		"Longitude": 8.262371,
+		"Latitude": 49.997459
 	}
 },
-"Izumi": {
+"Kupferbergterrasse": {
 	"Kategorie": "Sushi",
 	"Position": {
-		"Longitude": 13.39988,
-		"Latitude": 52.52935
+		"Longitude": 8.262950,
+		"Latitude": 49.997611
 	}
 },
-"DUDU": {
+"Sektkellerei Goldhand": {
 	"Kategorie": "Sushi",
 	"Position": {
-		"Longitude": 13.415165,
-		"Latitude": 52.493024
+		"Longitude": 8.265976,
+		"Latitude": 49.997652
 	}
 }
 }
