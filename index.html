@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>Where to Eat</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/ratchet.min.css">
+    <style>
+			.karte,
+      .google-karte {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+      .noburger .Burger,
+      .nopasta .Pasta,
+      .nopizza .Pizza,
+      .nosushi .Sushi {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="segmented-control">
+      <nav class="bar bar-tab">
+        <a class="tab-item control-item active" href="#karte">
+          <span class="icon icon-home"></span>
+          <span class="tab-label">Karte</span>
+        </a>
+        <a class="tab-item control-item" href="#liste">
+          <span class="icon icon-list"></span>
+          <span class="tab-label">Liste</span>
+        </a>
+        <a class="tab-item control-item" href="#optionen">
+          <span class="icon icon-gear"></span>
+          <span class="tab-label">Optionen</span>
+        </a>
+      </nav>
+    </div>
+    <div class="content">
+      <div id="karte" class="karte control-content active">
+        <div class="google-karte" id="google-karte"></div>
+      </div>
+      <div class="card control-content" id="liste">
+        <ul class="table-view" id="restaurant_list">
+      
+        </ul>
+      </div>
+      <div id="optionen" class="control-content">
+        <ul class="table-view">
+          <li class="table-view-cell">
+            Burger
+            <div id="burger" class="toggle active">
+              <div class="toggle-handle"></div>
+            </div>
+          </li>
+          <li class="table-view-cell">
+            Pizza
+            <div id="pizza" class="toggle active">
+              <div class="toggle-handle active"></div>
+            </div>
+          </li>
+          <li class="table-view-cell">
+            Pasta
+            <div id="pasta" class="toggle active">
+              <div class="toggle-handle"></div>
+            </div>
+          </li>
+          <li class="table-view-cell">
+            Sushi
+            <div id="sushi" class="toggle active">
+              <div class="toggle-handle"></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script src="js/segmented-controllers.js"></script>
+    <script src="js/toggles.js"></script>
+    <script>
+      var karte;
+      var marker;
+      var myLongitude, myLatitude;
+      
+      var showPosition = function(position){
+		
+        width = document.querySelector('#google-karte').offsetWidth;
+        height = document.querySelector('#google-karte').offsetHeight;
+
+        myLongitude = position.coords.longitude;
+        myLatitude = position.coords.latitude;
+
+        var options = {
+          zoom: 13,
+          center: new google.maps.LatLng(myLatitude, myLongitude),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        
+        karte = new google.maps.Map(document.querySelector('#google-karte'), options);
+        
+        loadRestaurants();
+      };
+      
+      var loadRestaurants = function(){
+        var restaurant_list = document.querySelector('#restaurant_list');
+        restaurant_list.innerHTML = '';
+
+        request = new XMLHttpRequest();
+        request.open('get','daten/restaurants.json',true);
+        request.send();
+        
+        request.addEventListener('load',function(){
+          data = JSON.parse(this.response);
+          for(restaurant in data){
+            restaurant_list.insertAdjacentHTML('beforeend', '<li class="table-view-cell media '+data[restaurant].Kategorie+'"><img class="media-object pull-left"  src="http://maps.google.com/maps/api/staticmap?center='+data[restaurant].Position.Latitude+','+data[restaurant].Position.Longitude+'&zoom=13&size=50x50&markers=color:blue|size:tiny|'+data[restaurant].Position.Latitude+','+data[restaurant].Position.Longitude+'&sensor=true"/><div class="media-body">'+restaurant+'<p>'+calculateDistance(myLongitude,myLatitude,data[restaurant].Position.Longitude,data[restaurant].Position.Latitude)+'</p></div></li>');
+            
+            marker = new google.maps.Marker({
+              map: karte,
+              animation: google.maps.Animation.DROP,
+              position: new google.maps.LatLng(data[restaurant].Position.Latitude,data[restaurant].Position.Longitude)
+            });
+          }
+        });
+      };
+      
+      var calculateDistance = function(myLongitude, myLatitude, long1, lat1) {
+        erdRadius = 6371;
+
+        myLongitude = myLongitude * (Math.PI/180);
+        myLatitude = myLatitude * (Math.PI/180);
+        long1 = long1 * (Math.PI/180);
+        lat1 = lat1 * (Math.PI/180);
+
+        x0 = myLongitude * erdRadius * Math.cos(myLatitude);
+        y0 = myLatitude  * erdRadius;
+
+        x1 = long1 * erdRadius * Math.cos(lat1);
+        y1 = lat1  * erdRadius;
+
+        dx = x0 - x1;
+        dy = y0 - y1;
+
+        d = Math.sqrt((dx*dx) + (dy*dy));
+
+        if(d < 1) {
+          return Math.round(d*1000)+" m";
+        } else {
+          return Math.round(d*10)/10+" km";
+        }
+      };
+      
+      var burger = document.querySelector('#burger');
+      burger.addEventListener('toggle',function(){
+        if(this.classList.contains('active')) {
+          document.querySelector('#liste ul').classList.remove('noburger');
+        } else {
+          document.querySelector('#liste ul').classList.add('noburger');
+        }
+      });
+      
+      var pasta = document.querySelector('#pasta');
+      pasta.addEventListener('toggle',function(){
+        if(this.classList.contains('active')) {
+          document.querySelector('#liste ul').classList.remove('nopasta');
+        } else {
+          document.querySelector('#liste ul').classList.add('nopasta');
+        }
+      });
+      
+      var pizza = document.querySelector('#pizza');
+      pizza.addEventListener('toggle',function(){
+        if(this.classList.contains('active')) {
+          document.querySelector('#liste ul').classList.remove('nopizza');
+        } else {
+          document.querySelector('#liste ul').classList.add('nopizza');
+        }
+      });
+      
+      var sushi = document.querySelector('#sushi');
+      sushi.addEventListener('toggle',function(){
+        if(this.classList.contains('active')) {
+          document.querySelector('#liste ul').classList.remove('nosushi');
+        } else {
+          document.querySelector('#liste ul').classList.add('nosushi');
+        }
+      });
+      
+      navigator.geolocation.getCurrentPosition(showPosition);
+    </script>
+  </body>
+</html>
