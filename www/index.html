@@ -47,7 +47,7 @@
       </div>
       <div class="card control-content" id="liste">
         <ul class="table-view" id="restaurant_list">
-      
+
         </ul>
       </div>
       <div id="optionen" class="control-content">
@@ -86,9 +86,9 @@
       var karte;
       var marker;
       var myLongitude, myLatitude;
-      
+
       var showPosition = function(position){
-		
+
         width = document.querySelector('#google-karte').offsetWidth;
         height = document.querySelector('#google-karte').offsetHeight;
 
@@ -96,16 +96,16 @@
         myLatitude = position.coords.latitude;
 
         var options = {
-          zoom: 13,
+          zoom: 15,
           center: new google.maps.LatLng(myLatitude, myLongitude),
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        
+
         karte = new google.maps.Map(document.querySelector('#google-karte'), options);
-        
+
         loadRestaurants();
       };
-      
+
       var loadRestaurants = function(){
         var restaurant_list = document.querySelector('#restaurant_list');
         restaurant_list.innerHTML = '';
@@ -113,12 +113,12 @@
         request = new XMLHttpRequest();
         request.open('get','daten/restaurants.json',true);
         request.send();
-        
+
         request.addEventListener('load',function(){
           data = JSON.parse(this.response);
           for(restaurant in data){
             restaurant_list.insertAdjacentHTML('beforeend', '<li class="table-view-cell media '+data[restaurant].Kategorie+'"><img class="media-object pull-left"  src="http://maps.google.com/maps/api/staticmap?center='+data[restaurant].Position.Latitude+','+data[restaurant].Position.Longitude+'&zoom=13&size=50x50&markers=color:blue|size:tiny|'+data[restaurant].Position.Latitude+','+data[restaurant].Position.Longitude+'&sensor=true"/><div class="media-body">'+restaurant+'<p>'+calculateDistance(myLongitude,myLatitude,data[restaurant].Position.Longitude,data[restaurant].Position.Latitude)+'</p></div></li>');
-            
+
             marker = new google.maps.Marker({
               map: karte,
               animation: google.maps.Animation.DROP,
@@ -127,7 +127,7 @@
           }
         });
       };
-      
+
       var calculateDistance = function(myLongitude, myLatitude, long1, lat1) {
         erdRadius = 6371;
 
@@ -153,7 +153,7 @@
           return Math.round(d*10)/10+" km";
         }
       };
-      
+
       var burger = document.querySelector('#burger');
       burger.addEventListener('toggle',function(){
         if(this.classList.contains('active')) {
@@ -162,7 +162,7 @@
           document.querySelector('#liste ul').classList.add('noburger');
         }
       });
-      
+
       var pasta = document.querySelector('#pasta');
       pasta.addEventListener('toggle',function(){
         if(this.classList.contains('active')) {
@@ -171,7 +171,7 @@
           document.querySelector('#liste ul').classList.add('nopasta');
         }
       });
-      
+
       var pizza = document.querySelector('#pizza');
       pizza.addEventListener('toggle',function(){
         if(this.classList.contains('active')) {
@@ -180,7 +180,7 @@
           document.querySelector('#liste ul').classList.add('nopizza');
         }
       });
-      
+
       var sushi = document.querySelector('#sushi');
       sushi.addEventListener('toggle',function(){
         if(this.classList.contains('active')) {
@@ -189,7 +189,7 @@
           document.querySelector('#liste ul').classList.add('nosushi');
         }
       });
-      
+
       navigator.geolocation.getCurrentPosition(showPosition);
     </script>
   </body>
