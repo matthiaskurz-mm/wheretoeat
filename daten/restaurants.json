@@ -1,0 +1,58 @@
+{
+"Pizza Dach": {
+	"Kategorie": "Pizza",
+	"Position": {
+		"Longitude": 13.456106,
+		"Latitude": 52.51024
+	}
+},
+"Burgeramt": {
+	"Kategorie": "Burger",
+	"Position": {
+		"Longitude": 13.459539,
+		"Latitude": 52.510299
+	}
+},
+"Pesto i Pizza": {
+	"Kategorie": "Pizza",
+	"Position": {
+		"Longitude": 13.413776,
+		"Latitude": 52.511971
+	}
+},
+"Il Due Forni": {
+	"Kategorie": "Pizza",
+	"Position": {
+		"Longitude": 13.412397,
+		"Latitude": 52.530876
+	}
+},
+"Spaghetti Western": {
+	"Kategorie": "Pasta",
+	"Position": {
+		"Longitude": 13.388557,
+		"Latitude": 52.524368
+	}
+},
+"Ron Teleski": {
+	"Kategorie": "Pizza",
+	"Position": {
+		"Longitude": 13.415165,
+		"Latitude": 52.493024
+	}
+},
+"Izumi": {
+	"Kategorie": "Sushi",
+	"Position": {
+		"Longitude": 13.39988,
+		"Latitude": 52.52935
+	}
+},
+"DUDU": {
+	"Kategorie": "Sushi",
+	"Position": {
+		"Longitude": 13.415165,
+		"Latitude": 52.493024
+	}
+}
+}
